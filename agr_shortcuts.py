@@ -10,17 +10,28 @@ import glob
 import os
 
 
-def jobcard(project):
-    """ open the job card folder"""
-    project_folder = glob.glob('O:\\*' + str(project) + '*\\')
-    project_folder = [x for x in project_folder if os.path.isdir]
-    if project_folder:
-        jobcard_folder = glob.glob(project_folder[0] + '\\Job Card*')
+app = {
+    'pdf': r'C:\Program Files\Adobe\Reader 11.0\Reader\AcroRd32.exe',
+    'autohotkey': r'C:\Program Files\AutoHotkey\AutoHotkey.exe',
+    'excel': r'C:\Program Files\Microsoft Office\Office12\EXCEL.EXE',
+    'email': r'C:\Program Files\Microsoft Office\Office12\OUTLOOK.EXE',
+    'word': r'C:\Program Files\Microsoft Office\Office12\WINWORD.EXE',
+    'firefox': r'C:\Program Files\Mozilla Firefox\firefox.exe',
+    'notepad': r'C:\Program Files\Notepad++\notepad++.exe',
+    'paint': r'C:\Program Files\Paint.NET\PaintDotNet.exe',
+    'r': r'C:\Program Files\RStudio\bin\rstudio.exe',
+    'tabula': r'C:\Program Files\tabula\tabula.exe',
+    'cmd': r'C:\Program Files\ConEmu\ConEmu.exe',
+    }
 
-    if jobcard_folder:
-        subprocess.Popen('explorer ' + jobcard_folder[0])
-    elif project_folder:
-        subprocess.Popen('explorer ' + project_folder[0])
+
+def jobcard(project):
+    jobcard = glob.glob('O:\\*\\Job Card*\\' + project + '*.xls*')
+    folder = glob.glob('O:\\*' + project[3:7] + '*\\Job Card*')
+    if jobcard:
+        subprocess.Popen([app['excel'], jobcard[0]])
+    elif folder:
+        subprocess.Popen('explorer' + ' "' + folder[0] + '"')
     else:
         print("Can't find job card folder!")
 
@@ -64,7 +75,7 @@ def drawing(partcode):
 
 
 def main():
-    drawing('AGR1271-111-03')
+    jobcard('AGR1288-800-01')
 
 
 if __name__ == '__main__':
