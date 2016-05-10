@@ -22,7 +22,12 @@ app = {
     'r': r'C:\Program Files\RStudio\bin\rstudio.exe',
     'tabula': r'C:\Program Files\tabula\tabula.exe',
     'cmd': r'C:\Program Files\ConEmu\ConEmu.exe',
+    'operation': r'C:\Program Files\Pegasus\Operations II\Operations.exe'
     }
+
+
+def operation():
+    subprocess.Popen(app['operation'])
 
 
 def jobcard(project):
