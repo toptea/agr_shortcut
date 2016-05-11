@@ -8,8 +8,6 @@ Created on Tue Feb 23 08:20:30 2016
 import subprocess
 import glob
 import os
-from constants import APP_LOCATION, FILE_LOCATION
-
 
 
 def operation():
@@ -68,39 +66,8 @@ def drawing(partcode):
         print("Can't find drawing in Dropbox")
 
 
-class Drawing:
-    def __init__(self, partcode):
-        self.partcode = partcode
-        self.program = APP_LOCATION['pdf_reader']
-        self.initial_file_path = (
-            'C:\\Documents and Settings\\GARY\\' +
-            'My Documents\\Dropbox\\0001-AGR Project-Files\\')
-
-    def find_folder_path(self):
-        agr_project_number = str(self.partcode[3:7])
-        initial_file_path = self.initial_file_path
-        filepaths = glob.glob(
-            initial_file_path + '*' + agr_project_number + '*\\')
-        return filepaths[0]
-
-    def find_file_path(self):
-        pass
-
-    def open_folder(self):
-        pass
-
-    def open_file(self):
-        filepath = self.find_file()
-        program = self.program
-        try:
-            subprocess.Popen(program + " \"" + filepath + ".pdf\"")
-        except:
-            print("Can't find drawing in Dropbox")
-
-
 def main():
-    d = Drawing('AGR1288-800-01')
-    print(d.find_file())
+    pass
 
 
 if __name__ == '__main__':
