@@ -3,84 +3,117 @@
 Created on Tue Feb 23 08:20:30 2016
 
 @author: Gary
-"""
 
+
+>>> import os
+>>> os.path.join(r"C:\mypath", "subfolder")
+'C:\\mypath\\subfolder'
+
+"""
 import subprocess
 import glob
 import os
 
-
-app = {
-    'pdf': r'C:\Program Files\Adobe\Reader 11.0\Reader\AcroRd32.exe',
-    'autohotkey': r'C:\Program Files\AutoHotkey\AutoHotkey.exe',
-    'excel': r'C:\Program Files\Microsoft Office\Office12\EXCEL.EXE',
-    'email': r'C:\Program Files\Microsoft Office\Office12\OUTLOOK.EXE',
-    'word': r'C:\Program Files\Microsoft Office\Office12\WINWORD.EXE',
-    'firefox': r'C:\Program Files\Mozilla Firefox\firefox.exe',
-    'notepad': r'C:\Program Files\Notepad++\notepad++.exe',
-    'paint': r'C:\Program Files\Paint.NET\PaintDotNet.exe',
-    'r': r'C:\Program Files\RStudio\bin\rstudio.exe',
-    'tabula': r'C:\Program Files\tabula\tabula.exe',
-    'cmd': r'C:\Program Files\ConEmu\ConEmu.exe',
-    'operation': r'C:\Program Files\Pegasus\Operations II\Operations.exe'
-    }
+from shortcut_base import Shortcut
+from constants import PROGRAM_PATH, FOLDER_PATH
 
 
-def operation():
-    subprocess.Popen(app['operation'])
+class Drawing(Shortcut):
+
+    def __init__(self, partcode, project=None):
+        self.program = PROGRAM_PATH['pdf_reader']
+        self.folder = FOLDER_PATH['pdf_drawings']
+        self.partcode = partcode
+        if project is None:
+            self.project = partcode[3:7]
+        else:
+            self.project = project
+
+    def find_folder_paths(self):
+        globber = os.path.join(self.folder, '*' + self.project + '*')
+        folders = glob.glob(globber)
+        if len(folders) == 0:
+            message = 'Invalid glob expression: ' + globber
+            raise NotADirectoryError(message)
+        return folders
+
+    def find_file_paths(self):
+        files = []
+        for folder in self.find_folder_paths():
+            globber = os.path.join(folder, self.partcode + '.pdf')
+            file = glob.glob(globber)
+            files.extend(file)
+        if len(files) == 0:
+            message = self.partcode + '.pdf in ' + self.project + ' folder'
+            raise FileNotFoundError(message)
+        return files
 
 
-def jobcard(project):
-    jobcard = glob.glob('O:\\*\\Job Card*\\' + project + '*.xls*')
-    folder = glob.glob('O:\\*' + project[3:7] + '*\\Job Card*')
-    if jobcard:
-        subprocess.Popen([app['excel'], jobcard[0]])
-    elif folder:
-        subprocess.Popen('explorer' + ' "' + folder[0] + '"')
-    else:
-        print("Can't find job card folder!")
+class PO(Shortcut):
+
+    def __init__(self, number):
+        self.program = PROGRAM_PATH['pdf_reader']
+        self.folder = FOLDER_PATH['purchase_order']
+        self.number = str(number)
+
+    def find_folder_paths(self):
+        if not os.path.isdir(self.folder):
+            message = 'Invalid path: ' + self.folder
+            raise NotADirectoryError(message)
+        return self.folder
+
+    def find_file_paths(self):
+        file = os.path.join(self.folder, 'PO_00' + self.number + '.PDF')
+        if not os.path.exists(file):
+            message = 'Invalid path: ' + file
+            raise FileNotFoundError(message)
+        return file
 
 
-def stickers(arg=None):
-    """ open the sticker spreadsheet template"""
-    program = 'C:\\Program Files\\Microsoft Office\\Office12\\EXCEL.EXE'
-    path = (
-        'C:\\Documents and Settings\\GARY\\My Documents\\' +
-        'Templates\\Labels - Drawings\\')
-    if arg == 'blank':
-        filename = 'Stickers - Blanks.xls'
-    elif arg == 'formulated':
-        filename = 'Stickers - Formulated.xls'
-    else:
-        filename = 'Stickers.xls'
-    subprocess.Popen(program + " \"" + path + filename + "\"")
+class Jobcard(Shortcut):
+
+    def __init__(self, partcode, project=None):
+        self.program = PROGRAM_PATH['excel']
+        self.folder = FOLDER_PATH['jobcard']
+        self.partcode = partcode
+        if project is None:
+            self.project = partcode[3:7]
+        else:
+            self.project = project
+
+    def find_folder_paths(self):
+        globber = os.path.join(r'O:\*' + self.project + '*', 'Job Card*')
+        folders = glob.glob(globber)
+        if len(folders) == 0:
+            message = 'Invalid glob expression: ' + globber
+            raise NotADirectoryError(message)
+        return folders
+
+    def find_file_paths(self):
+        files = []
+        for folder in self.find_folder_paths():
+            globber = os.path.join(folder, '*' + self.partcode + '*.xls')
+            file = glob.glob(globber)
+            files.extend(file)
+        if len(files) == 0:
+            message = 'Jobcard: ' + self.partcode
+            raise FileNotFoundError(message)
+        return files
 
 
-def po(number):
-    """ open the purchase order pdf"""
-    program = 'C:\\Program Files\\Adobe\\Reader 11.0\\Reader\\AcroRd32.exe'
-    path = '\\\\Balmoral\\Pegasus\\Operations II\\data\\A_PDF\\PO_00'
-    try:
-        subprocess.Popen(program + " \"" + path + str(number) + ".pdf\"")
-    except:
-        print("Can't find PO")
-
-
-def drawing(partcode):
-    """ open manufacture drawing pdf"""
-    program = 'C:\\Program Files\\Adobe\\Reader 11.0\\Reader\\AcroRd32.exe'
-    path = (
-        'C:\\Documents and Settings\\GARY\\' +
-        'My Documents\\Dropbox\\0001-AGR Project-Files\\')
-    path = glob.glob(path + '*' + str(partcode[3:7]) + '*\\')[0]
-    try:
-        subprocess.Popen(program + " \"" + path + partcode + ".pdf\"")
-    except:
-        print("Can't find drawing in Dropbox")
+def run(program):
+        subprocess.Popen(PROGRAM_PATH[program])
 
 
 def main():
-    jobcard('AGR1288-800-01')
+    d = Jobcard('AGR1288-010-00')
+    print('folder:')
+    print(d.find_folder_paths())
+    print('\nfile:')
+    print(d.find_file_paths())
+    d.open_folder()
+    d.open_file()
+    print('finish')
 
 
 if __name__ == '__main__':
