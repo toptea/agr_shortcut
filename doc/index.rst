@@ -9,7 +9,11 @@ Welcome to Shortcut's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
+
+   api
+   uml_diagram
+   user_guide
 
 
 

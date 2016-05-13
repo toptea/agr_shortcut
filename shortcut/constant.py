@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed May 11 11:24:28 2016
-
-@author: Gary
-"""
 
 PROGRAM_PATH = {
     'pdf_reader': r'C:\Program Files\Adobe\Reader 11.0\Reader\AcroRd32.exe',
@@ -24,8 +18,6 @@ FOLDER_PATH = {
     'pdf_drawings': r'C:\Documents and Settings\GARY\My Documents\Dropbox\0001-AGR Project-Files',
     'purchase_order': r'\\Balmoral\Pegasus\Operations II\data\A_PDF',
     'stickers': r'C:\Documents and Settings\GARY\My Documents\work\templates\labels',
-    'jobcard': 'O:\\',
+    'jobcard': '\\Balmoral\Project Files',
 }
-
-TEMPLATE_PATH = {}
     
