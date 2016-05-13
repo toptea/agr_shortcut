@@ -1,3 +1,7 @@
+"""
+Useful command line inferface for the shortcut methods. Can not be
+imported by the module. TODO
+"""
 
 import argparse
 
@@ -26,6 +30,3 @@ class CommandLineInterface:
             print("the square of {} equals {}".format(args.square, answer))
         else:
             print(answer)
-
-cli = CommandLineInterface()
-cli.main()

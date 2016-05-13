@@ -1,3 +1,15 @@
+"""
+This module contains global constants of various programs and
+folders paths.
+
+Example
+=======
+
+>>> from shortcut.constant import PROGRAM_PATH, FOLDER_PATH
+>>> from pprint import pprint
+>>> pprint(PROGRAM_PATH)
+>>> pprint(FOLDER_PATH)
+"""
 
 PROGRAM_PATH = {
     'pdf_reader': r'C:\Program Files\Adobe\Reader 11.0\Reader\AcroRd32.exe',

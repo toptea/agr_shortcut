@@ -11,9 +11,11 @@ Contents:
 .. toctree::
    :maxdepth: 3
 
-   api
-   uml_diagram
-   user_guide
+   rst/quick_start
+   rst/module_dependency_graph
+   rst/api_reference
+   rst/uml_diagram
+   rst/license
 
 
 

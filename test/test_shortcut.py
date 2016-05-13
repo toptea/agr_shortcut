@@ -6,12 +6,12 @@ Created on Wed May 11 15:08:07 2016
 """
 
 import unittest
-import shortcut
+import shortcut.core
 
 class TestDrawing(unittest.TestCase):
 
     def setUp(self):
-        self.drawing = shortcut.Drawing('AGR1288-010-00')
+        self.drawing = shortcut.core.Drawing('AGR1288-010-00')
 
     def test_find_folder(self):
         expect = [
@@ -32,7 +32,7 @@ class TestDrawing(unittest.TestCase):
 class TestJobcard(unittest.TestCase):
 
     def setUp(self):
-        self.jc = shortcut.Jobcard('AGR1288-010-00')
+        self.jc = shortcut.core.Jobcard('AGR1288-010-00')
 
     def test_find_folder(self):
         expect = [r'O:\AGR-1288 HTL Pen Needle-2\Job Cards']
@@ -50,7 +50,7 @@ class TestJobcard(unittest.TestCase):
 class TestPO(unittest.TestCase):
 
     def setUp(self):
-        self.po = shortcut.PO(60000)
+        self.po = shortcut.core.PO(60000)
 
     def test_find_folder(self):
         expect = r'\\Balmoral\Pegasus\Operations II\data\A_PDF'
@@ -68,7 +68,7 @@ class TestPO(unittest.TestCase):
 class TestSticker(unittest.TestCase):
 
     def setUp(self):
-        self.sticker = shortcut.Sticker()
+        self.sticker = shortcut.core.Sticker()
 
     def test_find_folder(self):
         expect = (
@@ -83,9 +83,6 @@ class TestSticker(unittest.TestCase):
             r'\work\templates\labels\drawing labels - normal 7x2.xls')
         actual = self.sticker.find_file()
         self.assertEqual(expect, actual)
-
-    def test_autofail(self):
-        self.assertEqual(True, False)
 
 
 if __name__ == '__main__':

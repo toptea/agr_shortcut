@@ -1,7 +1,11 @@
+"""
+This module define base classes for the shortcut objects found in
+core.py file.
+"""
 
 import glob
 import os
-from subprocess import call
+from subprocess import Popen
 from abc import ABCMeta, abstractmethod
 
 
@@ -11,25 +15,25 @@ class Match(metaclass=ABCMeta):
     def open_folder(self):
         """
         take the path string (or take the first element if its a list) and
-        open the folder using subprocess call
+        open the folder using subprocess Popen
         """
         folder = self.find_folder()
         if type(folder) == list:
             folder = folder[0]
         folder = _add_commas(folder)
-        call('explorer ' + folder)
+        Popen('explorer ' + folder)
 
     def open_file(self):
         """
         take the path string (or take the first element if its a list) and
-        open the file using subprocess call
+        open the file using subprocess Popen
         """
         file = self.find_file()
         if type(file) == list:
             file = file[0]
         file = _add_commas(file)
         program = _add_commas(self.program)
-        call(program + ' ' + file)
+        Popen(program + ' ' + file)
 
     def open(self):
         """open file and if its not possible, open folder"""
