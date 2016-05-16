@@ -9,7 +9,7 @@ Welcome to Shortcut's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    rst/quick_start
    rst/module_dependency_graph

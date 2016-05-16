@@ -1,38 +1,117 @@
 Quick Start
-===========
+===============
 
-Open the following files quickly:
+Instead of manually navigating to different files, these can be open
+more efficiently via the command line or via python console. Here are some
+quick examples:
 
--------
+
+------------------
 Drawing
--------
+------------------
 
-.. image:: ../image/dir_drawing.png
 
->>> import shortcut
->>> shortcut.drawing('AGR1288-010-00')
+a) Window Explorer
+~~~~~~~~~~~~~~~~~~
+    
+    .. image:: ../image/dir_drawing.png
+    
+    
+b) Command Line
+~~~~~~~~~~~~~~~
+    
+    .. code-block:: powershell
 
--------
+        python -m shortcut drawing AGR1288-010-00
+    
+    
+c) Python
+~~~~~~~~~
+    
+    .. code-block:: python
+    
+        import shortcut
+        shortcut.drawing('AGR1288-010-00')
+
+
+------------------
 Jobcard
--------
+------------------
 
-.. image:: ../image/dir_jobcard.png
 
->>> shortcut.jobcard('AGR1288-010-00')
+a) Window Explorer
+~~~~~~~~~~~~~~~~~~
 
--------
+    .. image:: ../image/dir_jobcard.png
+
+
+b) Command Line
+~~~~~~~~~~~~~~~
+
+    .. code-block:: powershell
+        
+        python -m shortcut jobcard AGR1288-010-00
+
+
+c) Python
+~~~~~~~~~
+
+    .. code-block:: python
+    
+        shortcut.jobcard('AGR1288-010-00')
+
+
+
+------------------
 PO
--------
+------------------
 
-.. image:: ../image/dir_purchase_order.png
 
->>> shortcut.po(68628)
+a) Window Explorer
+~~~~~~~~~~~~~~~~~~
 
--------
+    .. image:: ../image/dir_purchase_order.png
+
+
+b) Command Line
+~~~~~~~~~~~~~~~
+
+    .. code-block:: powershell
+        
+        python -m shortcut po 68628
+
+
+c) Python
+~~~~~~~~~
+
+    .. code-block:: python
+    
+        shortcut.po(68628)
+
+
+------------------
 Sticker
--------
+------------------
 
-.. image:: ../image/dir_sticker.png
 
->>> shortcut.sticker()
+a) Window Explorer
+~~~~~~~~~~~~~~~~~~
+
+    .. image:: ../image/dir_sticker.png
+
+
+b) Command Line
+~~~~~~~~~~~~~~~
+
+     .. code-block:: powershell
+        
+        python -m shortcut sticker
+
+
+c) Python
+~~~~~~~~~
+
+    .. code-block:: python
+    
+        shortcut.sticker()
 
