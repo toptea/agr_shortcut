@@ -8,6 +8,7 @@ Created on Wed May 11 15:08:07 2016
 import unittest
 import shortcut.core
 
+
 class TestDrawing(unittest.TestCase):
 
     def setUp(self):
@@ -83,7 +84,3 @@ class TestSticker(unittest.TestCase):
             r'\work\templates\labels\drawing labels - normal 7x2.xls')
         actual = self.sticker.find_file()
         self.assertEqual(expect, actual)
-
-
-if __name__ == '__main__':
-    unittest.main()
