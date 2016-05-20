@@ -12,9 +12,11 @@ Contents:
    :maxdepth: 2
 
    rst/quick_start
-   rst/module_dependency_graph
-   rst/api_reference
-   rst/uml_diagram
+   rst/nav_api_reference
+   rst/nav_module_dependency_graph
+   rst/nav_uml_diagram
+   rst/new_api_reference
+   
    rst/license
 
 

@@ -1,47 +1,47 @@
-Shortcut API Reference
+New API Reference
 ======================
 
 
-.. automodule:: shortcut
+.. automodule:: shortcut.new
    :members:
 
 ---------------------
 The constant module
 ---------------------
 
-.. automodule:: shortcut.constant
+.. automodule:: shortcut.new.constant
    :members:
 
 ---------------------
-The base module
+The load module
 ---------------------
 
 
-.. automodule:: shortcut.base
+.. automodule:: shortcut.new.load
    :members:
 
 ---------------------
-The core module
+The check module
 ---------------------
 
 
-.. automodule:: shortcut.core
+.. automodule:: shortcut.new.check
    :members:
 
 
 ---------------------
-The simple module
+The write module
 ---------------------
 
 
-.. automodule:: shortcut.simple
+.. automodule:: shortcut.new.write
    :members:
 
 
 ----------------------
-The interface module
+The create module
 ----------------------
 
 
-.. automodule:: shortcut.interface
+.. automodule:: shortcut.new.create
    :members:
