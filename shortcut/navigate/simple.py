@@ -37,8 +37,8 @@ def drawing(partcode, project='default'):
     >>> import shortcut
     >>> drawing('AGR1288-010-00')
     """
-    dw = Drawing(partcode, project)
-    dw.open()
+    pdf = Drawing(partcode, project)
+    pdf.open()
 
 
 def jobcard(partcode, project='default'):
@@ -61,8 +61,8 @@ def jobcard(partcode, project='default'):
     >>> import shortcut
     >>> jobcard('AGR1288-010-00')
     """
-    jc = Jobcard(partcode, project)
-    jc.open()
+    xls = Jobcard(partcode, project)
+    xls.open()
 
 
 def po(number):
@@ -83,8 +83,8 @@ def po(number):
     >>> import shortcut
     >>> po(61234)
     """
-    po = PO(number)
-    po.open()
+    pdf = PO(number)
+    pdf.open()
 
 
 def sticker():
@@ -100,10 +100,10 @@ def sticker():
     >>> import shortcut
     >>> shortcut.sticker()
     """
-    sk = Sticker()
-    sk.open()
-
+    xls = Sticker()
+    xls.open()
 
 
 def run(program):
+    """run program defined in constant.py"""
     Popen(PROGRAM_PATH[program])

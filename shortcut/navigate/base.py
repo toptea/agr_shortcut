@@ -12,13 +12,27 @@ from abc import ABCMeta, abstractmethod
 class Match(metaclass=ABCMeta):
     """Base Class"""
 
+    def __init__(self):
+        self.program = None
+        self.folder = None
+
+    @abstractmethod
+    def find_folder(self):
+        """abstract method - defined in the GlobMatch/ExactMatch classes"""
+        pass
+
+    @abstractmethod
+    def find_file(self):
+        """abstract method - defined in the GlobMatch/ExactMatch classes"""
+        pass
+
     def open_folder(self):
         """
         take the path string (or take the first element if its a list) and
         open the folder using subprocess Popen
         """
         folder = self.find_folder()
-        if type(folder) == list:
+        if isinstance(folder, list):
             folder = folder[0]
         folder = _add_commas(folder)
         Popen('explorer ' + folder)
@@ -29,7 +43,7 @@ class Match(metaclass=ABCMeta):
         open the file using subprocess Popen
         """
         file = self.find_file()
-        if type(file) == list:
+        if isinstance(file, list):
             file = file[0]
         file = _add_commas(file)
         program = _add_commas(self.program)
@@ -63,10 +77,12 @@ class GlobMatch(Match):
             raise NotADirectoryError(self._folder_expression())
         return folders
 
-    def find_file(self):
+    def find_file(self, folders=None):
         """return file path list"""
+        if folders is None:
+            folders = self.find_folder()
         files = []
-        for folder in self.find_folder():
+        for folder in folders:
             file = glob.glob(self._file_expression(folder))
             files.extend(file)
         if len(files) == 0:

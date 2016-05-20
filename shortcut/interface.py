@@ -1,11 +1,11 @@
 """
 Useful command line inferface for the shortcut methods. Can not be
-imported by the module. TODO
+imported by the module.
 """
-
-from . import core
-from pprint import pprint
 import click
+from pprint import pprint
+from .navigate import core as nav
+from .create import create
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -13,6 +13,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.version_option(version='1.0.0')
 def main():
+    """main command parser"""
     pass
 
 
@@ -21,7 +22,8 @@ def main():
 @click.option('-p', '--path', is_flag=True, help='Print path location.')
 @click.option('-f', '--folder', is_flag=True, help='Open/find folder.')
 def drawing(partcode, path, folder):
-    shortcut = core.Drawing(partcode)
+    """command for drawing shortcut"""
+    shortcut = nav.Drawing(partcode)
     parse_options(shortcut, path, folder)
 
 
@@ -30,7 +32,8 @@ def drawing(partcode, path, folder):
 @click.option('-p', '--path', is_flag=True, help='Print path location.')
 @click.option('-f', '--folder', is_flag=True, help='Open/find folder.')
 def jobcard(partcode, path, folder):
-    shortcut = core.Jobcard(partcode)
+    """command for jobcard shortcut"""
+    shortcut = nav.Jobcard(partcode)
     parse_options(shortcut, path, folder)
 
 
@@ -39,7 +42,8 @@ def jobcard(partcode, path, folder):
 @click.option('-f', '--folder', is_flag=True, help='Open/find folder.')
 @click.argument('po_number')
 def po(po_number, path, folder):
-    shortcut = core.PO(po_number)
+    """command for purchase order shortcut"""
+    shortcut = nav.PO(po_number)
     parse_options(shortcut, path, folder)
 
 
@@ -47,11 +51,20 @@ def po(po_number, path, folder):
 @click.option('-p', '--path', is_flag=True, help='Print path location.')
 @click.option('-f', '--folder', is_flag=True, help='Open/find folder.')
 def sticker(path, folder):
-    shortcut = core.Sticker()
+    """command for sticker shortcut"""
+    shortcut = nav.Sticker()
     parse_options(shortcut, path, folder)
 
 
+@main.command(help='Create Manufacture jobcard')
+@click.argument('args', nargs=-1)
+def new_jobcard(args):
+    """command for drawing shortcut"""
+    create.jobcard(*args)
+
+
 def parse_options(shortcut, path, folder):
+    """helper function for shortcut objects"""
     if not path and not folder:
         shortcut.open_file()
     elif not path and folder:

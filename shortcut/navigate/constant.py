@@ -30,6 +30,6 @@ FOLDER_PATH = {
     'pdf_drawings': r'C:\Documents and Settings\GARY\My Documents\Dropbox\0001-AGR Project-Files',
     'purchase_order': r'\\Balmoral\Pegasus\Operations II\data\A_PDF',
     'stickers': r'C:\Documents and Settings\GARY\My Documents\work\templates\labels',
-    'jobcard': '\\Balmoral\Project Files',
+    'jobcard': r'\\Balmoral\Project Files',
 }
     
