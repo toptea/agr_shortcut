@@ -1,3 +1,7 @@
+"""
+The main module. create.jobcard() combines all the decoupled function
+found in load, check and write modules.
+"""
 import win32com.client
 import os
 
@@ -5,11 +9,12 @@ from . import load
 from . import check
 from . import write
 
-TEMPLATE = r'C:\code\python\create_jobcard\test\jobcard.xls'
-OUTPUT = r'C:\code\python\create_jobcard\test'
+TEMPLATE = r'C:\Documents and Settings\GARY\My Documents\work\templates\jobcard.xls'
+OUTPUT = r'C:\Documents and Settings\GARY\Desktop'
 
 
 def get_filename(raw, proj, top_lvl_assy, ijn):
+    """return jobcard filename"""
     try:
         desc = raw[raw.partcode == top_lvl_assy].desc.values[0]
         desc = desc.strip()
@@ -20,7 +25,19 @@ def get_filename(raw, proj, top_lvl_assy, ijn):
 
 
 def jobcard(proj, assy, ijn):
+    """
+    create manufacture jobcard with everything defined based on the
+    user input
 
+    Parameters
+    ----------
+    proj : str
+        AGR project number (eg. 'AGR-1288')
+    assy: str
+        Top level assembly (eg. 'AGR1288-010-00')
+    ijn : int
+        Internal job number (eg. '44080')
+    """
     assy_head = load.assy_head(proj, assy)
     proj_head = load.proj_head(ijn)
     coop_data = load.coop_bom_directly(proj)

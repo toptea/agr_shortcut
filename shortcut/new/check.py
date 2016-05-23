@@ -1,11 +1,12 @@
+"""
+Dublication in the BOM can cause problems when printing out change notice.
+This module contain a function that roughly scan the bom for duplications.
+"""
 import logging
 
 
-def bom_for_duplication(df, assy=None, electric_only=False):
-    """
-    return a dataframe with parts that are duplicated
-    on the bom
-    """
+def bom_for_duplication(df, assy=None, electric_only=False, show=False):
+    """check if there are duplicated parts on the bom"""
     if assy is not None:
         df = df[df.assy == assy]
 
@@ -18,10 +19,15 @@ def bom_for_duplication(df, assy=None, electric_only=False):
     df = df[~df.duplicated(subset=['projcode', 'assy', 'item', 'partcode'],
                            keep=False)]
     df = df.sort_values(['projcode', 'assy', 'partcode'])
+    df = df.reset_index()
     df = df[['projcode', 'assy', 'item',
              'partcode', 'desc', 'qty', 'std_cost']]
+
     if len(df) == 0:
         logging.info("No dublicated parts found on the '" + assy + "' BOM")
-    else:
-        logging.warning("Dublicated parts found on the '" + assy + "' BOM...")
-        # return df
+
+    if len(df) != 0:
+        logging.warning("Dublicated parts found on the '" + assy + "' BOM!!!")
+
+    if len(df) != 0 and show:
+        print(df[['item', 'partcode', 'desc']])

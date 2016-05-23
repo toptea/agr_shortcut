@@ -5,7 +5,10 @@ imported by the module.
 import click
 from pprint import pprint
 from .navigate import core as nav
-from .create import create
+
+from .new import load
+from .new import check
+from .new import create
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -13,7 +16,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.version_option(version='1.0.0')
 def main():
-    """main command parser"""
+    """AGR Shortcut"""
     pass
 
 
@@ -56,11 +59,19 @@ def sticker(path, folder):
     parse_options(shortcut, path, folder)
 
 
-@main.command(help='Create Manufacture jobcard')
+@main.command(help='Create manufacture jobcard')
 @click.argument('args', nargs=-1)
 def new_jobcard(args):
     """command for drawing shortcut"""
     create.jobcard(*args)
+
+
+@main.command(help='Find duplication on the bom')
+@click.argument('args', nargs=-1)
+def dubs(args):
+    """command for finding duplication on the bom"""
+    coop_data = load.coop_bom_directly(args[0])
+    check.bom_for_duplication(coop_data, args[1], show=True)
 
 
 def parse_options(shortcut, path, folder):

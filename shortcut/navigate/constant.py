@@ -5,10 +5,10 @@ folders paths.
 Example
 =======
 
->>> from shortcut.constant import PROGRAM_PATH, FOLDER_PATH
->>> from pprint import pprint
->>> pprint(PROGRAM_PATH)
->>> pprint(FOLDER_PATH)
+# >>> from shortcut.constant import PROGRAM_PATH, FOLDER_PATH
+# >>> from pprint import pprint
+# >>> pprint(PROGRAM_PATH)
+# >>> pprint(FOLDER_PATH)
 """
 
 PROGRAM_PATH = {
@@ -32,4 +32,3 @@ FOLDER_PATH = {
     'stickers': r'C:\Documents and Settings\GARY\My Documents\work\templates\labels',
     'jobcard': r'\\Balmoral\Project Files',
 }
-    

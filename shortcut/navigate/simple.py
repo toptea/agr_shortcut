@@ -35,7 +35,7 @@ def drawing(partcode, project='default'):
     Example
     -------
     >>> import shortcut
-    >>> drawing('AGR1288-010-00')
+    >>> shortcut.drawing('AGR1288-010-00')
     """
     pdf = Drawing(partcode, project)
     pdf.open()
@@ -59,7 +59,7 @@ def jobcard(partcode, project='default'):
     Example
     -------
     >>> import shortcut
-    >>> jobcard('AGR1288-010-00')
+    >>> shortcut.jobcard('AGR1288-010-00')
     """
     xls = Jobcard(partcode, project)
     xls.open()
@@ -81,7 +81,7 @@ def po(number):
     Example
     -------
     >>> import shortcut
-    >>> po(61234)
+    >>> shortcut.po('61234')
     """
     pdf = PO(number)
     pdf.open()

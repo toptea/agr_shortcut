@@ -2,3 +2,6 @@ __pycache__
 _build
 .xls
 .ipynb
+.idea/
+test/data.ipynb
+test/jobcard.xls

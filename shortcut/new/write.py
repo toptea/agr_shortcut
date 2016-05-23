@@ -1,11 +1,14 @@
+"""
+The module contains functions that relies on Excel workbook COM object (wb)
+to write data onto the jobcard. eg:
 
+>>> import win32com.client
+>>> excel = win32com.client.gencache.EnsureDispatch('Excel.Application')
+>>> wb = excel.Workbooks.Open(TEMPLATE)
+"""
 import logging
 
 from . import load
-
-
-TEMPLATE = r'C:\code\python\create_jobcard\test\jobcard.xls'
-OUTPUT = r'C:\code\python\create_jobcard\test'
 
 
 def assy_tabs(wb, tabs):
@@ -23,6 +26,7 @@ def assy_tabs(wb, tabs):
 
 
 def __example(wb):
+    """win32com excel example found online"""
     # excel = win32com.client.gencache.EnsureDispatch('Excel.Application')
     # excel.Visible = True
     # wb = excel.Workbooks.Open(OUTPUT)
@@ -38,6 +42,7 @@ def __example(wb):
 
 
 def proj_head(wb, proj_head_data):
+    """write project header data in jobcard's Overview tab"""
     logging.info("write project header in 'Overview'")
     ws = wb.Worksheets("Overview")
     ws.Cells(5, 3).Value = proj_head_data['code']
@@ -50,7 +55,8 @@ def proj_head(wb, proj_head_data):
 
 
 def assy_head(wb, assy_head_data):
-    logging.info("write assembly headers in 'Overview'")
+    """write assembly header data in jobcard's Overview tab"""
+    logging.info("write assembly header in 'Overview'")
     ws = wb.Worksheets("Overview")
     rows = assy_head_data.shape[0]
     cols = assy_head_data.shape[1]
@@ -63,7 +69,12 @@ def assy_head(wb, assy_head_data):
 
 
 def assy_part(wb, proj, top_lvl_assy, assy_head_data, cost_data):
-
+    """
+    while looping between the different assembly tabs in the jobcard,
+    write the manufacture bom data in each section. Automatically insert
+    more rows for large BOMs and indent cells to show sub-assemblies based
+    on BOM level number.
+    """
     dfs = {}
     for index, row in assy_head_data.iterrows():
         dfs[row.tab_name] = (
@@ -96,6 +107,7 @@ def assy_part(wb, proj, top_lvl_assy, assy_head_data, cost_data):
 
 
 def assy_name(wb, raw, top_lvl_assy):
+    """write assembly name in overiew (assy_head missed this out)"""
     try:
         desc = raw[raw.partcode == top_lvl_assy].desc.values[0]
         ws = wb.Worksheets("Overview")
