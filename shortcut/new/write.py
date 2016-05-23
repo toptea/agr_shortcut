@@ -44,13 +44,13 @@ def __example(wb):
 def proj_head(wb, proj_head_data):
     """write project header data in jobcard's Overview tab"""
     logging.info("write project header in 'Overview'")
+    print(proj_head_data)
     ws = wb.Worksheets("Overview")
     ws.Cells(5, 3).Value = proj_head_data['code']
     ws.Cells(6, 3).Value = proj_head_data['name']
     ws.Cells(7, 3).Value = proj_head_data['client']
     ws.Cells(8, 3).Value = proj_head_data['ijn']
-    ws.Cells(12, 9).Value = (
-        proj_head_data['delivery_date'].strftime("%d/%m/%y"))
+    ws.Cells(12, 9).Value = proj_head_data['delivery_date']
     return wb
 
 
