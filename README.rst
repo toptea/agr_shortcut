@@ -18,10 +18,14 @@ quick examples:
     .. code-block:: powershell
 
         python -m shortcut --help
+
         python -m shortcut drawing AGR1288-010-00
         python -m shortcut jobcard AGR1288-010-00
         python -m shortcut po 68628
         python -m shortcut sticker
+
+        python -m shortcut new_jobcard AGR-1288 AGR1288-010-00 44080
+        python -m shortcut dubs AGR-1288 AGR1288-010-00
     
     
 **Python:**

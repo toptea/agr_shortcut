@@ -4,6 +4,7 @@ files and folders more easily.
 """
 
 from .navigate.simple import drawing, jobcard, po, sticker
+from .create.core import jobcard
 
 __title__ = 'shortcut'
 __version__ = '1.0'

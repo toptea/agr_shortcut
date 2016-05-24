@@ -13,10 +13,10 @@ from . import load
 
 def assy_tabs(wb, tabs):
     """
-    using the pre-existing template, create a new jobcard with the
+    using the pre-existing template, create a create jobcard with the
     assembly tabs defined
     """
-    logging.info('creating new jobcard')
+    logging.info('creating create jobcard')
     for tab in sorted(tabs, reverse=True):
         logging.info('creating ' + str(tab) + ' worksheet')
         wb.Worksheets('-000-').Copy(After=wb.Worksheets('-000-'))

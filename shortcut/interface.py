@@ -6,9 +6,9 @@ import click
 from pprint import pprint
 from .navigate import core as nav
 
-from .new import load
-from .new import check
-from .new import create
+from .create import load
+from .create import check
+from .create import core
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -63,7 +63,7 @@ def sticker(path, folder):
 @click.argument('args', nargs=-1)
 def new_jobcard(args):
     """command for drawing shortcut"""
-    create.jobcard(*args)
+    core.jobcard(*args)
 
 
 @main.command(help='Find duplication on the bom')
