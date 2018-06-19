@@ -6,3 +6,4 @@ _build
 test/data.ipynb
 test/jobcard.xls
 secret.py
+*.csv
