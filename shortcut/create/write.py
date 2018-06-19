@@ -3,12 +3,13 @@ The module contains functions that relies on Excel workbook COM object (wb)
 to write data onto the jobcard. eg:
 
 >>> import win32com.client
->>> excel = win32com.client.gencache.EnsureDispatch('Excel.Application')
+>>> excel = win32com.client.gencache.EnsureDispatch('Excel.Application.14')
 >>> wb = excel.Workbooks.Open(TEMPLATE)
 """
 import logging
-
+import pandas as pd
 from . import load
+pd.set_option('display.expand_frame_repr', False)
 
 
 def assy_tabs(wb, tabs):
@@ -68,7 +69,7 @@ def assy_head(wb, assy_head_data):
     return wb
 
 
-def assy_part(wb, proj, top_lvl_assy, assy_head_data, cost_data):
+def assy_part(wb, proj, top_lvl_assy, assy_head_data, cost_data, proj_head_dict):
     """
     while looping between the different assembly tabs in the jobcard,
     write the manufacture bom data in each section. Automatically insert
@@ -76,9 +77,15 @@ def assy_part(wb, proj, top_lvl_assy, assy_head_data, cost_data):
     on BOM level number.
     """
     dfs = {}
+    df = pd.DataFrame()
     for index, row in assy_head_data.iterrows():
-        dfs[row.tab_name] = (
-            load.assy_part(proj, top_lvl_assy, row.partcode, cost_data))
+
+        df_part = load.assy_part(proj, top_lvl_assy, row.partcode, cost_data, proj_head_dict)
+        dfs[row.tab_name] = df_part
+
+        df_part['assy'] = str(row.tab_name)
+        df = df.append(df_part)
+        del df_part
 
     for key in sorted(dfs):
         logging.info('write BOM in ' + str(key) + ' worksheet')
@@ -103,7 +110,7 @@ def assy_part(wb, proj, top_lvl_assy, assy_head_data, cost_data):
                 ws.Cells(index+21, 1).InsertIndent(indent)
                 ws.Cells(index+21, 4).InsertIndent(indent)
 
-    return wb
+    return wb, df
 
 
 def assy_name(wb, raw, top_lvl_assy):
@@ -115,3 +122,18 @@ def assy_name(wb, raw, top_lvl_assy):
     except:
         pass
     return wb
+
+
+def consolidated_bom(filename, proj, top_lvl_assy, assy_head_data, cost_data, proj_head_dict):
+    dfs = {}
+    df = pd.DataFrame()
+    for index, row in assy_head_data.iterrows():
+
+        df_part = load.assy_part(proj, top_lvl_assy, row.partcode, cost_data, proj_head_dict, only_manu=False)
+        dfs[row.tab_name] = df_part
+
+        df_part['assy'] = str(row.tab_name)
+        df = df.append(df_part)
+        del df_part
+
+    df.to_excel(filename, sheet_name='raw', index=False)

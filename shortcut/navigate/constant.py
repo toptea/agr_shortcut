@@ -12,13 +12,13 @@ Example
 """
 
 PROGRAM_PATH = {
-    'pdf_reader': r'C:\Program Files\Adobe\Reader 11.0\Reader\AcroRd32.exe',
+    'pdf_reader': r'C:\Program Files (x86)\Adobe\Reader 11.0\Reader\AcroRd32.exe',
     'autohotkey': r'C:\Program Files\AutoHotkey\AutoHotkey.exe',
-    'excel': r'C:\Program Files\Microsoft Office\Office12\EXCEL.EXE',
+    'excel': r'C:\Program Files\Microsoft Office 15\root\office15\EXCEL.EXE',
     'email': r'C:\Program Files\Microsoft Office\Office12\OUTLOOK.EXE',
-    'word': r'C:\Program Files\Microsoft Office\Office12\WINWORD.EXE',
-    'firefox': r'C:\Program Files\Mozilla Firefox\firefox.exe',
-    'notepad': r'C:\Program Files\Notepad++\notepad++.exe',
+    'word': r'C:\Program Files\Microsoft Office 15\root\office15\WINWORD.EXE',
+    'firefox': r'C:\Program Files (x86)\Mozilla Firefox\firefox.exe',
+    'notepad': r'C:\Program Files (x86)\Notepad++\notepad++.exe',
     'paint': r'C:\Program Files\Paint.NET\PaintDotNet.exe',
     'r': r'C:\Program Files\RStudio\bin\rstudio.exe',
     'tabula': r'C:\Program Files\tabula\tabula.exe',

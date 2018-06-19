@@ -94,7 +94,7 @@ class Jobcard(GlobMatch):
         """return a glob expression used in the find_folder method"""
         if self.project == 'default':
             project = self.partcode[3:7]
-        return os.path.join(r'O:\*' + project + '*', 'Job Card*')
+        return os.path.join(r'Z:\*' + project + '*', 'Job Card*')
 
     def _file_expression(self, folder):
         """return a glob expression used in the find_file method"""

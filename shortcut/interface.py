@@ -61,9 +61,9 @@ def sticker(path, folder):
 
 @main.command(help='Create manufacture jobcard')
 @click.argument('args', nargs=-1)
-def new_jobcard(args):
+def new_jobcards(args):
     """command for drawing shortcut"""
-    core.jobcard(*args)
+    core.jobcards(*args)
 
 
 @main.command(help='Find duplication on the bom')

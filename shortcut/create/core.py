@@ -9,22 +9,23 @@ from . import load
 from . import check
 from . import write
 
-TEMPLATE = r'C:\Documents and Settings\GARY\My Documents\work\templates\jobcard.xls'
-OUTPUT = r'C:\Documents and Settings\GARY\Desktop'
+
+TEMPLATE = r'C:\Users\GARY\Documents\templates\jobcard.xls'
+OUTPUT = r'C:\Users\GARY\Desktop'
 
 
-def get_filename(raw, proj, top_lvl_assy, ijn):
+def get_filename(raw, proj, assy, ijn):
     """return jobcard filename"""
     try:
-        desc = raw[raw.partcode == top_lvl_assy].desc.values[0]
+        desc = raw[raw.partcode == assy].desc.values[0]
         desc = desc.strip()
-        desc = top_lvl_assy + ' ' + str(desc) + '.xls'
+        desc = assy + ' ' + str(desc) + '.xlsx'
     except:
-        desc = 'AGR' + str(proj[4:]) + '-' + str(ijn) + ' Assembly.xls'
+        desc = 'AGR' + str(proj[4:]) + '-' + str(ijn) + ' Assembly.xlsx'
     return desc
 
 
-def jobcard(proj, assy, ijn):
+def jobcards(proj, assy, ijn):
     """
     create manufacture jobcard with everything defined based on the
     user input
@@ -38,8 +39,8 @@ def jobcard(proj, assy, ijn):
     ijn : int
         Internal job number (eg. '44080')
     """
-    assy_head = load.assy_head(proj, assy)
     proj_head = load.proj_head(ijn)
+    assy_head = load.assy_head(proj, assy, proj_head)
     coop_data = load.coop_bom_directly(proj)
     cost_data = load.cost()
 
@@ -56,7 +57,16 @@ def jobcard(proj, assy, ijn):
         wb = write.proj_head(wb, proj_head)
         wb = write.assy_name(wb, coop_data, assy)
         wb = write.assy_head(wb, assy_head)
-        wb = write.assy_part(wb, proj, assy, assy_head, cost_data)
+        wb, df = write.assy_part(wb, proj, assy, assy_head, cost_data, proj_head)
     finally:
-        wb.SaveAs(os.path.join(OUTPUT, filename))
+        wb.SaveAs(os.path.join(OUTPUT, filename), FileFormat=51)
         excel.Application.Quit()
+        write.consolidated_bom(
+            filename=os.path.join(OUTPUT, 'consolidated ' + filename),
+            proj=proj,
+            top_lvl_assy=assy,
+            assy_head_data=assy_head,
+            proj_head_dict=proj_head,
+            cost_data=cost_data
+        )
+        # df.to_excel(os.path.join(OUTPUT, 'consolidated ' + filename + 'x'), sheet_name='raw', index=False)
